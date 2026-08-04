@@ -57,30 +57,28 @@ Cỗ máy khớp lệnh (Matching Engine) của Sở Giao dịch luôn tuân th�
 
 Dưới góc độ hệ thống, HNX phân rã lệnh thị trường thành 3 loại để kiểm soát rủi ro trượt giá và khối lượng treo.
 
-```mermaid
 graph TD
     A[Nhận lệnh Thị trường HNX] --> B{Phân loại}
     
     %% MTL Flow
-    B -->|MTL (Market To Limit)| C[Quét mức giá tốt nhất]
+    B -->|MTL - Market To Limit| C[Quét mức giá tốt nhất]
     C --> D[Khớp liên tục]
     D --> E{Còn dư khối lượng?}
     E -->|Có| F[Chuyển phần dư thành LO ở giá khớp cuối]
     E -->|Không| G[Trạng thái: FILLED]
 
     %% MAK Flow
-    B -->|MAK / IOC (Match And Kill)| H[Quét mức giá tốt nhất]
+    B -->|MAK / IOC - Match And Kill| H[Quét mức giá tốt nhất]
     H --> I[Khớp tối đa khối lượng có thể]
     I --> J{Còn dư khối lượng?}
     J -->|Có| K[Hủy ngay lập tức phần dư]
     J -->|Không| L[Trạng thái: FILLED]
 
     %% MOK Flow
-    B -->|MOK / FOK (Match Or Kill)| M[Snapshot toàn bộ sổ lệnh đối ứng]
+    B -->|MOK / FOK - Match Or Kill| M[Snapshot toàn bộ sổ lệnh đối ứng]
     M --> N{Tổng khối lượng đối ứng >= Khối lượng MOK?}
     N -->|Có| O[Khớp ngay lập tức 100% khối lượng]
     N -->|Không| P[Hủy toàn bộ lệnh, không khớp cổ phiếu nào]
-```
 
 **Lưu ý thiết kế:** Lệnh MOK (FOK) đòi hỏi tính toàn vẹn giao dịch (ACID) cực cao. Trong quá trình test performance, cần chú ý kịch bản race-condition khi có nhiều lệnh cùng tranh giành khối lượng đối ứng.
 
