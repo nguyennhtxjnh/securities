@@ -57,6 +57,7 @@ Cỗ máy khớp lệnh (Matching Engine) của Sở Giao dịch luôn tuân th�
 
 Dưới góc độ hệ thống, HNX phân rã lệnh thị trường thành 3 loại để kiểm soát rủi ro trượt giá và khối lượng treo.
 
+```mermaid
 graph TD
     A[Nhận lệnh Thị trường HNX] --> B{Phân loại}
     
@@ -79,7 +80,7 @@ graph TD
     M --> N{Tổng khối lượng đối ứng >= Khối lượng MOK?}
     N -->|Có| O[Khớp ngay lập tức 100% khối lượng]
     N -->|Không| P[Hủy toàn bộ lệnh, không khớp cổ phiếu nào]
-
+```
 **Lưu ý thiết kế:** Lệnh MOK (FOK) đòi hỏi tính toàn vẹn giao dịch (ACID) cực cao. Trong quá trình test performance, cần chú ý kịch bản race-condition khi có nhiều lệnh cùng tranh giành khối lượng đối ứng.
 
 ---
